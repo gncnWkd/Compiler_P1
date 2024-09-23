@@ -14,27 +14,33 @@
  */
 void printToken( TokenType token, const char* tokenString )
 { switch (token)
-  { case IF:
-    case THEN:
-    case ELSE:
-    case END:
-    case REPEAT:
-    case UNTIL:
-    case READ:
-    case WRITE:
-      fprintf(listing,
-         "reserved word: %s\n",tokenString);
-      break;
-    case ASSIGN: fprintf(listing,":=\n"); break;
+  { case IF: fprintf(listing,"reserved word: if\n"); break;
+    case ELSE: fprintf(listing,"reserved word: else\n"); break;
+    case WHILE: fprintf(listing,"reserved word: while\n"); break;
+    case RETURN: fprintf(listing,"reserved word: return\n"); break;
+    case INT: fprintf(listing,"reserved word: int\n"); break;
+    case VOID: fprintf(listing,"reserved word: void\n"); break;
+
+    case ASSIGN: fprintf(listing,"=\n"); break;
+    case EQ: fprintf(listing,"==\n"); break;
+    case NE: fprintf(listing,"!=\n"); break;
     case LT: fprintf(listing,"<\n"); break;
-    case EQ: fprintf(listing,"=\n"); break;
-    case LPAREN: fprintf(listing,"(\n"); break;
-    case RPAREN: fprintf(listing,")\n"); break;
-    case SEMI: fprintf(listing,";\n"); break;
+    case LE: fprintf(listing,"<=\n"); break;
+    case GT: fprintf(listing,">\n"); break;
+    case GE: fprintf(listing,">=\n"); break;
     case PLUS: fprintf(listing,"+\n"); break;
     case MINUS: fprintf(listing,"-\n"); break;
     case TIMES: fprintf(listing,"*\n"); break;
     case OVER: fprintf(listing,"/\n"); break;
+    case LPAREN: fprintf(listing,"(\n"); break;
+    case RPAREN: fprintf(listing,")\n"); break;
+    case LCURLY: fprintf(listing,"{\n"); break;
+    case RCURLY: fprintf(listing,"}\n"); break;
+    case LBRACE: fprintf(listing,"[\n"); break;
+    case RBRACE: fprintf(listing,"]\n"); break;
+    case SEMI: fprintf(listing,";\n"); break;
+    case COMMA: fprintf(listing,",\n"); break;
+    
     case ENDFILE: fprintf(listing,"EOF\n"); break;
     case NUM:
       fprintf(listing,
@@ -95,10 +101,10 @@ TreeNode * newExpNode(ExpKind kind)
  */
 char * copyString(char * s)
 { int n;
-  char * t;
+  char* t;
   if (s==NULL) return NULL;
   n = strlen(s)+1;
-  t = malloc(n);
+  t = (char*)malloc(n);
   if (t==NULL)
     fprintf(listing,"Out of memory error at line %d\n",lineno);
   else strcpy(t,s);
@@ -108,7 +114,7 @@ char * copyString(char * s)
 /* Variable indentno is used by printTree to
  * store current number of spaces to indent
  */
-static indentno = 0;
+static int indentno = 0;
 
 /* macros to increase/decrease indentation */
 #define INDENT indentno+=2
