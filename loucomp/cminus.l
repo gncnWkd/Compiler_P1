@@ -16,7 +16,7 @@ char tokenString[MAXTOKENLEN+1];
 digit       [0-9]
 number      {digit}+
 letter      [a-zA-Z]
-identifier  letter(letter|digit)*
+identifier  [a-zA-Z][a-zA-Z|0-9]*
 newline     \n
 whitespace  [ \t]+
 
@@ -55,10 +55,13 @@ whitespace  [ \t]+
                   char d;
                   do
                   { c = input();
+                    //printf("c = %c\n",c);
                     if (c == EOF) break;
-                    d = input();
                     if (c == '\n') lineno++;
-                  } while ((c != '*') || (d != '/')) ;
+                    if (c == '*') {
+                      d = input();
+                    }
+                  } while (!((c == '*') && (d == '/'))) ;
                 }
 .               {return ERROR;}
 
@@ -74,6 +77,7 @@ TokenType getToken(void)
     yyout = listing;
   }
   currentToken = yylex();
+  if (currentToken == ENDFILE) lineno++;
   strncpy(tokenString,yytext,MAXTOKENLEN);
   if (TraceScan) {
     fprintf(listing,"\t%d: ",lineno);
