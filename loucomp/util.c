@@ -20,7 +20,6 @@ void printToken( TokenType token, const char* tokenString )
     case RETURN: fprintf(listing,"reserved word: return\n"); break;
     case INT: fprintf(listing,"reserved word: int\n"); break;
     case VOID: fprintf(listing,"reserved word: void\n"); break;
-
     case ASSIGN: fprintf(listing,"=\n"); break;
     case EQ: fprintf(listing,"==\n"); break;
     case NE: fprintf(listing,"!=\n"); break;
